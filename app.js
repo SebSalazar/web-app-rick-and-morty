@@ -5,8 +5,8 @@ const app = express();
 const Consulta = require('./models/consulta');
 const port = 8080;
 
-// --- Consulta API Rick and Morty
-const main = async () => {
+// --- Consultas API Rick and Morty
+const personajes = async () => {
   const consultas =  new Consulta();
   const resp = await consultas.getPersonaje();
 }
@@ -20,24 +20,24 @@ app.use(express.static("public"));
 
 // --- Controlador del Hanledbar ---
 app.get("/", (req, res) => {
-  main();
+  personajes();
   res.render('home', {
-    titulo: 'AbueRemedios',
-    nombre: 'Remedios de la abuela',
+    titulo: 'RickAndMorty',
+    nombre: 'Todo sobre Rick and Morty',
   });
 });
 
 app.get("/favoritos", (req, res) => {
   res.render('favoritos', {
-    titulo: 'AbueRemedios',
-    nombre: 'Remedios de la abuela'
+    titulo: 'RickAndMorty',
+    nombre: 'Todo sobre Rick and Morty',
   });
 });
 
 app.get("/remedios", (req, res) => {
   res.render('remedios', {
-    titulo: 'AbueRemedios',
-    nombre: 'Remedios de la abuela'
+    titulo: 'RickAndMorty',
+    nombre: 'Todo sobre Rick and Morty',
   });
 });
 

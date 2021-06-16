@@ -1,11 +1,17 @@
 class Personaje {
   id;
   nombre = "";
-  especie = "";
   estado = "";
+  especie = "";
   img = "";
 
-  constructor() {}
+  constructor(id, name, status, species, image) {
+    this.id = id;
+    this.nombre = name;
+    this.estado = status;
+    this.especie = species;
+    this.img = image;
+  }
 }
 
 module.exports = Personaje;
