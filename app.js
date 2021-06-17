@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require("express");
 var hbs = require("hbs");
 
 const app = express();
 const Consulta = require("./models/consulta");
-const port = 8080;
+const port = process.env.PORT;
 
 // --- Consultas API Rick and Morty
 const personajes = async () => {
