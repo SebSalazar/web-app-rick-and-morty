@@ -10,7 +10,7 @@ class Lugares {
     this.nombre = name;
     this.tipo = type;
     this.dimension = dimension;
-    this.episodio = created.split("T")[0];
+    this.fecha_creado = created.split("T")[0];
   }
 }
 

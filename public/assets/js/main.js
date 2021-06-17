@@ -4,124 +4,115 @@
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 */
 
-(function($) {
+(function ($) {
+  skel.breakpoints({
+    xlarge: "(max-width: 1680px)",
+    large: "(max-width: 1280px)",
+    medium: "(max-width: 980px)",
+    small: "(max-width: 736px)",
+    xsmall: "(max-width: 480px)",
+  });
 
-	skel.breakpoints({
-		xlarge:	'(max-width: 1680px)',
-		large:	'(max-width: 1280px)',
-		medium:	'(max-width: 980px)',
-		small:	'(max-width: 736px)',
-		xsmall:	'(max-width: 480px)'
-	});
+  $(function () {
+    var $window = $(window),
+      $body = $("body"),
+      $header = $("#header"),
+      $banner = $("#banner");
 
-	$(function() {
+    var $height = $("#header").height();
 
-		var	$window = $(window),
-			$body = $('body'),
-			$header = $('#header'),
-			$banner = $('#banner');
+    // Disable animations/transitions until the page has loaded.
+    $body.addClass("is-loading");
 
-		var $height = $('#header').height();
+    $window.on("load", function () {
+      window.setTimeout(function () {
+        $body.removeClass("is-loading");
+      }, 100);
+    });
 
-		// Disable animations/transitions until the page has loaded.
-			$body.addClass('is-loading');
+    // Fix: Placeholder polyfill.
+    $("form").placeholder();
 
-			$window.on('load', function() {
-				window.setTimeout(function() {
-					$body.removeClass('is-loading');
-				}, 100);
-			});
+    // Prioritize "important" elements on medium.
+    skel.on("+medium -medium", function () {
+      $.prioritize(
+        ".important\\28 medium\\29",
+        skel.breakpoint("medium").active
+      );
+    });
 
-		// Fix: Placeholder polyfill.
-			$('form').placeholder();
+    // Banner
 
-		// Prioritize "important" elements on medium.
-			skel.on('+medium -medium', function() {
-				$.prioritize(
-					'.important\\28 medium\\29',
-					skel.breakpoint('medium').active
-				);
-			});
+    if ($banner.length > 0) {
+      // IE: Height fix.
+      if (skel.vars.browser == "ie" && skel.vars.IEVersion > 9) {
+        skel.on("-small !small", function () {
+          $banner.css("height", "100vh");
+        });
 
-		// Banner
+        skel.on("+small", function () {
+          $banner.css("height", "");
+        });
+      }
 
-			if ($banner.length > 0) {
+      // More button.
+      $banner.find(".more").addClass("scrolly");
+    }
 
-				// IE: Height fix.
-					if (skel.vars.browser == 'ie'
-					&&	skel.vars.IEVersion > 9) {
+    // Get BG Image
 
-						skel.on('-small !small', function() {
-							$banner.css('height', '100vh');
-						});
+    if ($(".bg-img").length) {
+      $(".bg-img").each(function () {
+        var post = $(this),
+          bg = post.data("bg");
 
-						skel.on('+small', function() {
-							$banner.css('height', '');
-						});
+        post.css("background-image", "url(images/" + bg + ")");
+      });
+    }
 
-					}
+    // Posts
 
-				// More button.
-					$banner.find('.more')
-						.addClass('scrolly');
+    $(".post").each(function () {
+      var p = $(this),
+        i = p.find(".inner"),
+        m = p.find(".more");
 
-			}
+      m.addClass("scrolly");
 
+      p.scrollex({
+        top: "40vh",
+        bottom: "40vh",
+        terminate: function () {
+          m.removeClass("current");
+          i.removeClass("current");
+        },
+        enter: function () {
+          m.addClass("current");
+          i.addClass("current");
+        },
+        leave: function () {
+          m.removeClass("current");
+          i.removeClass("current");
+        },
+      });
+    });
 
-		// Get BG Image
+    // Scrolly.
+    if ($(".scrolly").length) {
+      $(".scrolly").scrolly();
+    }
 
-			if ( $( ".bg-img" ).length ) {
-
-				$( ".bg-img" ).each(function() {
-
-					var post 	= $(this),
-						bg 		= post.data('bg');
-
-					post.css( 'background-image', 'url(images/' + bg + ')' );
-
-				});
-
-
-			}
-
-		// Posts
-
-			$( ".post" ).each( function() {
-				var p = $(this),
-					i = p.find('.inner'),
-					m = p.find('.more');
-
-				m.addClass('scrolly');
-
-				p.scrollex({
-					top: '40vh',
-					bottom: '40vh',
-					terminate: 	function() { m.removeClass('current'); i.removeClass('current'); },
-					enter: 		function() { m.addClass('current'); i.addClass('current'); },
-					leave: 		function() { m.removeClass('current'); i.removeClass('current'); }
-				});
-
-			});
-
-		// Scrolly.
-			if ( $( ".scrolly" ).length ) {
-
-				$('.scrolly').scrolly();
-			}
-
-		// Menu.
-			$('#menu')
-				.append('<a href="#menu" class="close"></a>')
-				.appendTo($body)
-				.panel({
-					delay: 500,
-					hideOnClick: true,
-					hideOnSwipe: true,
-					resetScroll: true,
-					resetForms: true,
-					side: 'right'
-				});
-
-	});
-
+    // Menu.
+    $("#menu")
+      .append('<a href="#menu" class="close"></a>')
+      .appendTo($body)
+      .panel({
+        delay: 500,
+        hideOnClick: true,
+        hideOnSwipe: true,
+        resetScroll: true,
+        resetForms: true,
+        side: "right",
+      });
+  });
 })(jQuery);
