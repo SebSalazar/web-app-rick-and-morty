@@ -31,7 +31,7 @@ class Consulta {
         );
         listPersonajes.push(personaje);
       });
-      console.log(listPersonajes[1]);
+      // console.log(listPersonajes);
       return listPersonajes;
     } catch (error) {
       throw error;
@@ -53,7 +53,7 @@ class Consulta {
         listEpisodios.push(episodio);
       });
 
-      console.log(listEpisodios[1]);
+      // console.log(listEpisodios)
       return listEpisodios;
     } catch (error) {
       throw error;
@@ -73,7 +73,7 @@ class Consulta {
         listLugares.push(lugar);
       });
 
-      console.log(listLugares[1]);
+      // console.log(listLugares);
       return listLugares;
     } catch (error) {
       throw error;
